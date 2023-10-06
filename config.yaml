@@ -1,0 +1,570 @@
+plots:
+  # - main_results:
+  #   dir: '/home/riccardo/Scrivania/exp_bank/FL'
+  #   groupby: ['dataset', 'alpha']
+  #   params_for_label: ['algo']
+  #   lines_config:
+  #     linestyle: '--'
+  #     subsample_step: 10
+  #   params:
+  #     - algo: ['fedavg', 'fedprox', 'scaffold', 'feddyn', 'mime', 'mimeMom', 'fedavgm', 'mimeliteMom']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['lenet']
+  #       alpha: ['alpha0', 'alpha10000']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #     - algo: ['fedhbm']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['lenet']
+  #       alpha: ['alpha0', 'alpha10000']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       beta: ['beta1']
+  - title:  'Robustness'
+    function: gen_accuracy_plot
+    dir: '/home/riccardo/Scrivania/exp_bank/FL'
+    savefig_path: #'/home/riccardo/Scrivania/'
+    groupby: ['model', 'dataset']
+    plot_pref:
+      cifar10.lenet: {y_lim_bottom: 10, y_lim_top: 85}
+      cifar100.lenet: {y_lim_bottom: 0, y_lim_top: 52}
+      cifar10.resnet: {y_lim_bottom: 10, y_lim_top: 85}
+      cifar100.resnet: {y_lim_bottom: 0, y_lim_top: 52}
+      default: {}
+    params_for_label: ['algo']
+    lines_config: {}
+    process_config:
+      window: 100
+    params:
+      - algo: ['fedavg', 'fedavgm', 'scaffold']
+        dataset: ['cifar100']
+        model: ['resnet', 'lenet']
+        alpha: ['alpha0']
+        K: ['K100']
+        C: ['C0.1']
+        gamma: ['gamma0.1']
+      - algo: ['fedhbm']
+        dataset: ['cifar100']
+        model: ['resnet', 'lenet']
+        alpha: ['alpha0']
+        K: ['K100']
+        C: ['C0.1']
+        gamma: ['gamma0.1']
+        beta: ['beta0.9']
+  # - title:  'Ablation MimeMom'
+  #   function: accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/FL'
+  #   savefig_path:
+  #   groupby: ['dataset']
+  #   plot_pref:
+  #     # cifar10.lenet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.lenet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     # cifar10.resnet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.resnet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     default: {set_label: False }
+  #   params_for_label: ['algo', 'tau']
+  #   lines_config:
+  #     subsample_step: 100
+  #   process_config:
+  #     window: 100
+  #   params:
+  #     - algo: ['mimeMom']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['resnet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       tau: ['tau1', 'tau5', 'tau10', 'tau20']
+  #     - algo: ['naivehbm']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['resnet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       beta: ['beta0.9']
+  #     - algo: ['fedhbm']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['resnet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       beta: ['beta1']
+  #     - algo: ['mimeMom', 'scaffold', 'fedavg']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['resnet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  # - title:  'Ablation FedAvgM'
+  #   function: accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/FL'
+  #   savefig_path:
+  #   groupby: ['dataset']
+  #   plot_pref:
+  #     # cifar10.lenet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.lenet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     # cifar10.resnet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.resnet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     default: {set_label: False }
+  #   params_for_label: ['algo', 'tau']
+  #   lines_config:
+  #     subsample_step: 100
+  #   process_config:
+  #     window: 100
+  #   params:
+  #     - algo: ['fedavgm']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['lenet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       tau: ['tau1', 'tau5', 'tau10', 'tau20']
+  #     - algo: ['fedavgm', 'scaffold', 'fedavg']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['lenet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  # - title:  'Ablation $\tau$'
+  #   function: accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/FL'
+  #   savefig_path:
+  #   groupby: ['dataset', 'K', 'alpha']
+  #   plot_pref:
+  #     # cifar10.lenet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.lenet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     # cifar10.resnet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.resnet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     default: {set_label: False }
+  #   params_for_label: ['algo', 'tau']
+  #   lines_config:
+  #     subsample_step: 100
+  #   process_config: {}
+  #   params:
+  #     - algo: ['naivehbmserver']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['lenet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       tau: ['tau1', 'tau5', 'tau10', 'tau20', 'tau100']
+  #     - algo: ['naivehbm']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['lenet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       beta: ['beta0.9']
+  #     - algo: ['fedhbm']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['lenet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       beta: ['beta1']
+  #     - algo: ['fedcm', 'fedavg']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['lenet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  # - title:  'ResNet-20 FedHBM and LocalGHB'
+  #   function: accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/FL'
+  #   savefig_path:
+  #   groupby: ['dataset']
+  #   plot_pref:
+  #     # cifar10.lenet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.lenet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     # cifar10.resnet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.resnet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     default: {set_label: False }
+  #   params_for_label: ['algo']
+  #   lines_config:
+  #     subsample_step: 100
+  #   process_config: {}
+  #   params:
+  #     - algo: ['fedavg', 'scaffold', 'feddyn', 'mimeMom']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['resnet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #     - algo: ['naivehbm']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['resnet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       beta: ['beta0.9']
+  #     - algo: ['fedhbm']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['resnet']
+  #       alpha: ['alpha0']
+  #       K: ['K100']
+  #       C: ['C0.1']
+  #       beta: ['beta1']
+  # - title:  'Results GLv2'
+  #   function: accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/FL'
+  #   savefig_path:
+  #   groupby: ['dataset']
+  #   plot_pref:
+  #     # cifar10.lenet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.lenet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     # cifar10.resnet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.resnet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     default: {set_label: False, y_lim_bottom: 30, y_lim_top: 70 }
+  #   params_for_label: ['algo']
+  #   lines_config:
+  #     subsample_step: 25
+  #     plot_std: True
+  #   process_config:
+  #     window: 100
+  #   params:
+  #     - algo: ['fedhbm']
+  #       dataset: ['glv2']
+  #       model: ['mobilenetv2']
+  #       beta: ['beta0.99']
+  #     - algo: ['fedavg', 'scaffold', 'fedavgm']
+  #       dataset: ['glv2']
+  #       model: ['mobilenetv2']
+  # - title:  'INaturalist User-120k'
+  #   function: accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/FL'
+  #   savefig_path:
+  #   groupby: ['dataset']
+  #   plot_pref:
+  #     # cifar10.lenet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.lenet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     # cifar10.resnet: {y_lim_bottom: 10, y_lim_top: 85}
+  #     # cifar100.resnet: {y_lim_bottom: 0, y_lim_top: 52}
+  #     default: {set_label: False, y_lim_bottom: 0, y_lim_top: 45 }
+  #   params_for_label: ['algo']
+  #   lines_config:
+  #     subsample_step: 50
+  #     plot_std: True
+  #   process_config:
+  #     window: 100
+  #   params:
+  #     - algo: ['fedhbm']
+  #       dataset: ['user120k']
+  #       model: ['mobilenetv2']
+  #       beta: ['beta0.9']
+  #     - algo: ['fedavg', 'fedavgm']
+  #       dataset: ['user120k']
+  #       model: ['mobilenetv2']
+  # - title:  'HB AdamW vs SGD'
+  #   function: accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/centralized'
+  #   savefig_path:
+  #   groupby: ['model', 'bs']
+  #   plot_pref:
+  #     default: {set_label: False, y_lim_bottom: 30, y_lim_top: 66 }
+  #   params_for_label: ['algo', 'tau', 'optim']
+  #   lines_config:
+  #     subsample_step: 1
+  #   process_config:
+  #     window: 10
+  #   params:
+  #     - algo: ['centralizedhbm']
+  #       dataset: ['cifar100']
+  #       model: ['resnet']
+  #       optim: ['adamw_hbm']
+  #       # tau: ['tau1', 'tau2', 'tau4', 'tau8', 'tau16', 'tau32']
+  #       tau: ['tau1', 'tau8', 'tau32']
+  #       bs: ['bs16', 'bs32', 'bs64']
+  #     - algo: ['centralizedhbm']
+  #       dataset: ['cifar100']
+  #       model: ['resnet']
+  #       tau: ['tau1', 'tau8', 'tau32']
+  #       beta: ['beta0.9']
+  #       bs: ['bs16', 'bs32', 'bs64']
+  # - title:  'HB AdamW vs SGD fixed memory'
+  #   function: accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/centralized'
+  #   savefig_path:
+  #   groupby: ['dataset', 'bs']
+  #   plot_pref:
+  #     cifar10: {set_label: False, y_lim_bottom: 50, y_lim_top: 92 }
+  #     cifar100: {set_label: False, y_lim_bottom: 30, y_lim_top: 66 }
+  #     default: {}
+  #   params_for_label: ['optim', 'tau']
+  #   lines_config:
+  #     subsample_step: 1
+  #   process_config:
+  #     window: 10
+  #   params:
+  #     - algo: ['centralized']
+  #       dataset: ['cifar100', 'cifar10']
+  #       model: ['resnet']
+  #       optim: ['adamwhbm']
+  #       tau: ['tau1', 'tau8', 'tau16']
+  #       bs: ['bs16', 'bs32', 'bs64']
+  #     - algo: ['centralized']
+  #       dataset: ['cifar100', 'cifar10']
+  #       model: ['resnet']
+  #       optim: ['sgdhbm']
+  #       tau: ['tau2', 'tau16', 'tau32']
+  #       beta: ['beta0.9']
+  #       bs: ['bs16', 'bs32', 'bs64']
+  # - title:  'LARS vs SGDM'
+  #   function: accuracy_plot
+  #   classname: AccuracyLossPlot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/centralized'
+  #   savefig_path:
+  #   groupby: ['dataset']
+  #   plot_pref:
+  #     cifar10: {set_label: False, y_lim_bottom: 50, y_lim_top: 92 }
+  #     cifar100: {set_label: False, y_lim_bottom: 30, y_lim_top: 66 }
+  #     default: {}
+  #   params_for_label: ['optim', 'tau', 'bs', 'warmup']
+  #   lines_config:
+  #     subsample_step: 1
+  #   process_config:
+  #     window: 10
+  #   params:
+  #     - algo: ['centralized']
+  #       dataset: ['cifar100', 'cifar10']
+  #       model: ['resnet']
+  #       optim: ['lars']
+  #       beta: ['beta0.9']
+  #       bs: ['bs128', 'bs256', 'bs512']
+  #       warmup: ['linear5']
+  #     - algo: ['centralized']
+  #       dataset: ['cifar100', 'cifar10']
+  #       model: ['resnet']
+  #       optim: ['sgdm']
+  #       beta: ['beta0.9']
+  #       bs: ['bs128', 'bs256', 'bs512']
+  #       warmup: ['linear5']
+  # - title:  'Role of warmup strategy in large batch optimization'
+  #   function: gen_accuracy_plot
+  #   dir: '/home/riccardo/Scrivania/exp_bank/centralized'
+  #   savefig_path:
+  #   groupby: ['dataset']
+  #   plot_pref:
+  #     cifar10: {set_label: False, y_lim_bottom: 50, y_lim_top: 92 }
+  #     cifar100: {set_label: False, y_lim_bottom: 30, y_lim_top: 66 }
+  #     default: {}
+  #   params_for_label: ['optim', 'tau', 'bs', 'warmup']
+  #   lines_config:
+  #     subsample_step: 1
+  #   process_config:
+  #     window: 10
+  #     subsample_step: 1
+  #   params:
+  #     - algo: ['centralized']
+  #       dataset: ['cifar100', 'cifar10']
+  #       model: ['resnet']
+  #       optim: ['sgdm']
+  #       beta: ['beta0.9']
+  #       bs: ['bs128', 'bs256', 'bs512']
+  #       warmup: ['linear5']
+  #     - algo: ['centralized']
+  #       dataset: ['cifar100', 'cifar10']
+  #       model: ['resnet']
+  #       optim: ['sgdm']
+  #       beta: ['beta0.9']
+  #       bs: ['bs64', 'bs128', 'bs256', 'bs512']
+  - title:  'LARS HB'
+    function: gen_accuracy_plot
+    dir: '/home/riccardo/Scrivania/new_exp'
+    savefig_path:
+    groupby: ['dataset', 'bs']
+    plot_pref:
+      cifar10: {set_label: False, y_lim_bottom: 50, y_lim_top: 92 }
+      cifar100: {set_label: False, y_lim_bottom: 30, y_lim_top: 66 }
+      default: {}
+    params_for_label: ['optim', 'tau', 'bs']
+    lines_config: {}
+    process_config:
+      window: 10
+    params:
+      - algo: ['centralized']
+        dataset: ['cifar10', 'cifar100']
+        model: ['resnet']
+        optim: ['larshbm']
+        tau: ['tau2', 'tau4', 'tau8', 'tau16', 'tau32']
+        beta: ['beta0.9']
+        bs: ['bs128', 'bs256', 'bs512']
+  # - title:  'Ablation $\tau$'
+  #   function: gen_heatmaps
+  #   dir: '/home/riccardo/Scrivania/exp_bank/centralized'
+  #   savefig_path:
+  #   groupby: ['dataset', 'optim']
+  #   plot_pref:
+  #     default: {cbarlabel: 'accuracy(\%)', cmap: "YlGn"}
+  #   params_for_label:
+  #     x: 'bs'
+  #     y: 'tau'
+  #   process_config: {}
+  #   params:
+  #     - algo: ['centralized']
+  #       dataset: ['cifar10', 'cifar100']
+  #       model: ['resnet']
+  #       optim: ['sgdhbm']
+  #       tau: ['tau1', 'tau2', 'tau4', 'tau8', 'tau16', 'tau32']
+  #       beta: ['beta0.9']
+  #       bs: ['bs16', 'bs32', 'bs64']
+  - title: 'Effect of heterogeneity on final model quality'
+    function: gen_final_accuracy_plot
+    dir: '/home/riccardo/Scrivania/exp_bank/FL'
+    savefig_path: 
+    groupby: ['dataset']
+    plot_over: 'alpha'
+    plot_column: 0
+    plot_pref:
+      cifar10: 
+        xticks: [0,0.1,0.3,0.6]
+        yticks: '${range:66,84,4}'
+        set_label: ${tuple:'$\alpha$','accuracy ($\%$)'}
+      cifar100: 
+        xticks: [0,0.1,0.3,0.6]
+        yticks: '${range:20,50,5}'
+        set_label: ${tuple:'$\alpha','accuracy ($\%$)'}    
+      default: {}
+    params_for_label: ['algo']
+    lines_config:
+      linestyle: '--'
+      marker: 'o'
+    params:
+      - algo: ['fedavg', 'scaffold', 'feddyn', 'fedavgm', 'mimeMom']
+        dataset: ['cifar10']
+        model: ['lenet']
+        alpha: ['alpha0', 'alpha0.1', 'alpha0.3', 'alpha0.6']
+        K: ['K100']
+        C: ['C0.1']
+      - algo: ['fedhbm']
+        dataset: ['cifar10']
+        model: ['lenet']
+        alpha: ['alpha0', 'alpha0.1', 'alpha0.3', 'alpha0.6']
+        K: ['K100']
+        C: ['C0.1']
+        beta: ['beta1']
+  - title: 'Effect of heterogeneity on convergence speed'
+    function: gen_final_accuracy_plot
+    dir: '/home/riccardo/Scrivania/exp_bank/FL'
+    savefig_path: 
+    groupby: ['dataset']
+    plot_over: 'alpha'
+    plot_column: 3
+    plot_pref:
+      cifar10: 
+        xticks: [0,0.1,0.3,0.6]
+        yticks: '${range:1000,6000,1000}'
+        set_label: ${tuple:'$\alpha$','round'}
+      default: {}
+    params_for_label: ['algo']
+    lines_config:
+      linestyle: '--'
+      marker: 'o'
+      scale_y_axis: True
+    params:
+      - algo: ['fedavg', 'scaffold', 'feddyn', 'fedavgm', 'mimeMom']
+        dataset: ['cifar10']
+        model: ['lenet']
+        alpha: ['alpha0', 'alpha0.1', 'alpha0.3', 'alpha0.6']
+        K: ['K100']
+        C: ['C0.1']
+      - algo: ['fedhbm']
+        dataset: ['cifar10']
+        model: ['lenet']
+        alpha: ['alpha0', 'alpha0.1', 'alpha0.3', 'alpha0.6']
+        K: ['K100']
+        C: ['C0.1']
+        beta: ['beta1']
+summary_file: /home/riccardo/Scrivania/exp_bank/summary.csv
+plt_config:
+  legend.fontsize: 15
+  text.usetex: True
+  font.family: "serif"
+  font.size: 20
+  figure.dpi: 235
+  savefig.dpi: 200
+mappings:
+  params_name:
+    algo:
+      fedavg: 'FedAvg'
+      scaffold: 'SCAFFOLD'
+      feddyn: 'FedDyn'
+      fedprox: 'FedProx'
+      mime: 'Mime'
+      mimeMom: 'MimeMom'
+      adabest: 'AdaBest'
+      fedavgm: 'FedAvgM'
+      naivehbm: 'Local-GHB'
+      fedhbm: 'FedHBM'
+      fedhbmSI: 'FedHBM-shared'
+      fedhbmRI: 'FedHBM-random'
+      fedemNoUpdate: 'FedHBM-fixed'
+      fedhbmnesterov: 'FedHBM-Nesterov'
+      naivehbmserver: 'GHB'
+      fedcm: 'FedCM'
+      centralizedhbm: ''
+    dataset:
+      cifar10: 'CIFAR10'
+      cifar100: 'CIFAR100'
+      glv2: 'Landmarks-User-160k'
+      user120k: 'INaturalist-User-120k'
+    alpha:
+      alpha0: '$\alpha=0$'
+    model:
+      lenet: 'LeNet'
+      resnet: 'ResNet'
+    optim:
+      adamw: AdamW
+      adamwhbm: AdamW-HB
+      sgdm: SGDM
+      sgdhbm: SGD-HBM
+      lars: LARS
+      lamb: LAMB
+    beta: ${mapper:'beta','\beta'}
+      # beta1: '$\beta=1$'
+      # beta0.99: '$\beta=0.99$'
+      # beta0.9: '$\beta=0.9$'
+      # beta0.5: '$\beta=0.5$'
+    tau: ${mapper:'tau','\tau'}
+      # tau1: '$\tau=1$'
+      # tau5: '$\tau=5$'
+      # tau10: '$\tau=10$'
+      # tau20: '$\tau=20$'
+      # tau100: '$\tau=100$'
+      # tau2: '$\tau=2$'
+      # tau4: '$\tau=4$'
+      # tau8: '$\tau=8$'
+      # tau16: '$\tau=16$'
+      # tau32: '$\tau=32$'
+  algo_color:
+    fedavg: 'tab:blue'
+    fedprox: 'tab:orange'
+    scaffold: 'tab:green'
+    feddyn: 'tab:brown'
+    mime: 'tab:purple'
+    mimeLiteMom: 'tab:pink'
+    mimeMom: 'tab:olive'
+    fedavgm: 'indigo'
+    fedhbm: 'tab:red'
+    fedemNoUpdate: 'salmon'
+    naivehbm: 'orange'
+    fedhbmSI: 'salmon'
+    fedhbmRI: 'orangered'
+    fedhbmnesterov: 'indigo'
+    naivehbmserver: 'lightseagreen'
+    fedcm: 'grey'
+  color_light:
+    beta:
+      beta1: 1
+      beta0.99: 0.8
+      beta0.9: 0.7
+      beta0.5: 0.6
+    tau:
+      tau1: 0.5
+      tau5: 0.7
+      tau10: 1
+      tau20: 1.3
+      tau100: 1.8
+
+
+
+  
