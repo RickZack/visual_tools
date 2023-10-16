@@ -198,7 +198,7 @@ def process_plots(plots: dict , name_map: dict, summary: pd.DataFrame):
         plot_fn = eval(plot.function)
         figs, aggregated_data = plot_fn(plot.title, param_groups, name_map, plot, experiments, summary)
         if plot.savefig_path:
-            plot_path = os.path.join(plot.savefig_path, plot.title)
+            plot_path = replace_chars(os.path.join(plot.savefig_path, plot.title), '\n$\\', '')
             os.makedirs(plot_path, exist_ok=True)
             savefigs(figs, plot_path)
         summary = pd.concat([summary, aggregated_data])

@@ -141,17 +141,24 @@ def values_set(param_name: str, param_groups: List[Dict[str, list]]) -> set:
 
     Returns:
         set: all the values associated with param_name for all given param groups 
-    """ 
-    return set(*[p[param_name] for p in param_groups])
+    """
+    param_values = []
+    for p in param_groups:
+        param_values.extend(p[param_name]) 
+    return set(param_values)
 
 class dictLikeMapper:
     """Helper class to generate a dict-like mapper based on key manipulation
     """
-    def __init__(self, key: str, keyMapped: str) -> None:
+    def __init__(self, key: str, keyMapped: str, mode: str = 'normal') -> None:
         self.key = key
         self.keyMapped = keyMapped
+        self.mode = mode
     def __getitem__(self, value: str) -> str:
-        return f"${self.keyMapped}={value.removeprefix(self.key)}$"
+        value = value.removeprefix(self.key)
+        if self.mode == 'scientific':
+            value = "{:.1e}".format(float(value))
+        return f"${self.keyMapped}={value}$"
     def get(self, key, _=None):
         return self.__getitem__(key)
     

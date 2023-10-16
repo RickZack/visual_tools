@@ -23,7 +23,7 @@ class Plot(abc.ABC):
         ...
 
     def savefig(self, path: str):
-        self.ax.savefig(os.path.join(path, self.title))
+        self.fig.savefig(os.path.join(path, self.title))
 
 
 class AccuracyPlot(Plot):
@@ -82,6 +82,7 @@ class Heatmap(Plot):
     def __init__(self, fig_title: str, group_title: str, hparams_in_plot_title: bool, plot_title_fontsize: int, row_labels: List[str], 
                  col_labels: List[str], cbar_kw: Optional[dict] = None, cbarlabel: Optional[str] = None, **kwargs) -> None:
         super().__init__(fig_title, group_title, hparams_in_plot_title, plot_title_fontsize)
+        self.fig.set_tight_layout(True)
         self.cbar_kw = cbar_kw or {}
         self.cbarlabel = cbarlabel
 
@@ -101,7 +102,8 @@ class Heatmap(Plot):
         if not np.isnan(self.acc).any():
             im, _ = self._plot()
             _ = self._annotate(im)
-            self.fig.tight_layout()
+            # self.fig.tight_layout()
+
 
     def _plot(self):
         ax = self.ax
@@ -130,7 +132,6 @@ class Heatmap(Plot):
         ax.set_yticks(np.arange(self.acc.shape[0]+1)-.5, minor=True)
         ax.grid(which="minor", color="w", linestyle='-', linewidth=3)
         ax.tick_params(which="minor", bottom=False, left=False)
-
         return im, cbar
     
     def _annotate(self, im, valfmt="${x[0]:.2f}_{{\\tiny\\pm {x[1]:.2f}}}$", textcolors=("black", "white"), 
